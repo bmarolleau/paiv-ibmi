@@ -21,19 +21,16 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
 // Autres 
-var port = process.env.PORT || 10000;
-var vr   = require('./imageTreatment.js');
+var visualReco = require('./imageTreatment.js'),
+    port       = process.env.PORT || 10000;
 
 /* * * * * * * * * * * * * * *\
  *          ROUTES           *
 \* * * * * * * * * * * * * * */
 
-/* -- WEBSITE -- */
-
 app.get('/',  function(req, res) {
   res.render('index');
 });
-
 
 /* * * * * * * * * * * * * * *\
  *      GESTION SOCKET       *
@@ -44,8 +41,8 @@ io.sockets.on('connection', function (socket, pseudo) {
 
   socket.on('image', function(data) { 
     // console.log("-- New Image --")
-    vr.savePicture(data)
-    .then(imgFile => vr.classifyImage(imgFile))
+    visualReco.savePicture(data)
+    .then(() => visualReco.classifyImage())
     .then(result => socket.emit("emotion", result))
 
   });

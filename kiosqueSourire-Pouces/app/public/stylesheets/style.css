@@ -1,3 +1,6 @@
+/* * * * * * * * * * * * *\
+ *        GENERAL        *
+\* * * * * * * * * * * * */
 body,html {
 	height: 100vh;
 	width: 100vw;
@@ -10,44 +13,7 @@ body,html {
 	background-repeat: no-repeat;
 }
 
-
-.capture {
-	display: none;
-}
-
-.triangle {
-    width: 0;
-    height: 0;
-    border: solid 15px;
-    display: block;
-    margin: auto !important;
-}
-.triangle.sad {
-    /*border-color: transparent transparent  #EC9770 transparent;*/
-    border-color: transparent transparent sFF6B6B transparent;
-}
-.triangle.neutral {
-    /*border-color: transparent transparent  #F1E4B3 transparent;*/
-    border-color: transparent transparent #EFC94C transparent;
-}
-.triangle.happy {
-    /*border-color: transparent transparent  #15959F transparent;*/
-    border-color: transparent transparent #C7F464 transparent;
-}
-
-.select {
-	opacity: 1 !important;
-}
-
-.unselect {
-	opacity: 0.2 !important;
-}
-
-#gradient {
-	/*background: linear-gradient(to right, #EC9770,#F1E4B3, #15959F);*/
-	background: linear-gradient(to right, #FF6B6B, #EFC94C,  #C7F464);
-	height: 20px;
-}
+/* -- Page element -- */
 
 .loading {
 	position: relative;
@@ -56,32 +22,15 @@ body,html {
     width: 100%;
 }
 
-.item {
-    position: absolute;
-    float: left;
-    z-index: 100;
-	display: block;
-	margin: auto !important;
+/* -- During capture -- */
+.select {
+	opacity: 1 !important;
 }
 
-.item h2 {
-    text-align: center;
-    position: absolute;
-    line-height: 125px;
-    width: 100%;
+.unselect {
+	opacity: 0.2 !important;
 }
 
-svg {
-   -webkit-transform: rotate(-90deg);
-    transform: rotate(-90deg);
-}
-
-.circle_animation {
-  stroke-dasharray: 440; /* this value is the pixel circumference of the circle */
-  stroke-dashoffset: 440;
-  stroke: #4CD8EF;
-  transition: all 1s linear;
-}
 
 .timer {
 	position: absolute;
@@ -95,26 +44,10 @@ svg {
 	font-size: 2em;
 }
 
-.titre {
-	background-color: #d61317;
-	/*background-color: #C9380B;*/
-	color: white;
-	padding: 5px;
-	margin-top: 0;
-	text-align: center;
-}
-
-.speech-bubble {
-	height: auto;
-	width: auto;
-	max-height: 5vh;
-	margin-left: 20px;
-}
 
 .spinner {
 	color: white;
 }
-/*h1 {}*/
 
 .text {
 	text-align: center;
@@ -176,6 +109,10 @@ svg {
 .center {
 	margin: auto;
 }
+
+/* * * * * * * * * * * * *\
+ *       PORTRAIT        *
+\* * * * * * * * * * * * */
 @media screen and (orientation:portrait) {
 	#portrait {
 		display: block;
@@ -243,6 +180,9 @@ svg {
 
 }
 
+/* * * * * * * * * * * * *\
+ *       LANDSCAPE       *
+\* * * * * * * * * * * * */
 @media screen and (orientation:landscape) { 
 	#portrait {
 		display: none;
