@@ -1,0 +1,40 @@
+include ./header.jade
+
+.contain
+    .loading
+        .timer 0
+        video(autoplay="true", class="videoElement")
+
+#paysage
+    .droite
+        .emotions.center
+            .like
+                img.face(src="/images/like.png")
+            .dislike
+                img.face(src="/images/dislike.png")
+        .results.center
+            img.face.result(src="")
+            p(class='text') Nous avons détecté l'émotion :
+            .text-result
+            button(class="validate" class="button-feedback") Envoyer le feedback
+        .avis.center
+            button(class="capture") Capture
+            button(class="button-start") Donnez votre avis
+
+#portrait
+    #bas
+        .emotions.center
+            .like.col-xs-6.col-md-6.col-lg-6
+                img.face(src="/images/like.png")
+            .dislike.col-xs-6.col-md-6.col-lg-6
+                img.face(src="/images/dislike.png")
+        .results.center
+            img.face.result(src="")
+            #text
+                p(class='text') Nous avons détecté l'émotion :
+                .text-result
+                button(class="validate" class="button-feedback") Envoyer le feedback
+        .avis.center
+            button(class="capture") Capture
+            button(class="button-start") Donnez votre avis
+ 

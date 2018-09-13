@@ -1,0 +1,62 @@
+include ./header.jade
+
+.contain
+    .loading
+        .timer 0
+        video(autoplay="true", class="videoElement")
+
+#paysage
+    //- .col-xs-10.col-md-10.col-lg-10
+        
+    //- .col-xs-2.col-md-2.col-lg-2
+    .droite
+        .emotions.center
+            .like
+                img.face(src="/images/like.png")
+            .dislike
+                img.face(src="/images/dislike.png")
+            //- .face-happy
+            //-     img.face(src="/images/in-love (1).png")
+            //- .face-neutral
+            //-     img.face(src="/images/neutral (1).png") 
+            //- .face-sad
+            //-     img.face(src="/images/angry (1).png")
+        .results.center
+            img.face.result(src="")
+            p(class='text') Nous avons détecté l'émotion :
+            .text-result
+            button(class="validate" class="button-feedback") Envoyer le feedback
+        .avis.center
+            button(class="capture") Capture
+            button(class="button-start") Donnez votre avis
+
+#portrait
+    //- #video
+    //-     .col-xs-12.col-md-12.col-lg-12
+    //-         .contain
+    //-             .loading
+    //-                 .timer 0
+    //-                 video(autoplay="true",class="videoElement")
+
+    #bas
+        .emotions.center
+            .like.col-xs-6.col-md-6.col-lg-6
+                img.face(src="/images/like.png")
+            .dislike.col-xs-6.col-md-6.col-lg-6
+                img.face(src="/images/dislike.png")
+            //- .face-happy
+            //-     img.face(src="/images/in-love (1).png")
+            //- .face-neutral
+            //-     img.face(src="/images/neutral (1).png") 
+            //- .face-sad
+            //-     img.face(src="/images/angry (1).png")
+        .results.center
+            img.face.result(src="")
+            #text
+                p(class='text') Nous avons détecté l'émotion :
+                .text-result
+                button(class="validate" class="button-feedback") Envoyer le feedback
+        .avis.center
+            button(class="capture") Capture
+            button(class="button-start") Donnez votre avis
+ 
