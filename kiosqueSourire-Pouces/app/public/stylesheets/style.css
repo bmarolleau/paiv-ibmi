@@ -22,6 +22,10 @@ body,html {
     width: 100%;
 }
 
+.capture {
+	display: none;
+}
+
 /* -- During capture -- */
 .select {
 	opacity: 1 !important;
@@ -47,6 +51,7 @@ body,html {
 
 .spinner {
 	color: white;
+	width: 10%;
 }
 
 .text {

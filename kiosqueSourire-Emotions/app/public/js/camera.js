@@ -1,114 +1,31 @@
-// Connexion à socket.io
+/* * * * * * * * * * * * *\
+ *   GLOBAL VARIABLES    *
+\* * * * * * * * * * * * */
+
 var socket = io();
-// var Spinner = require('spin.js');
-var Debut;
-var Fin;
+
+var video, 
+    scale = 0.25,
+    timer = 3,
+    emotions = [];
+
+/* * * * * * * * * * * * *\
+ *   WHEN PAGE LOADS     *
+\* * * * * * * * * * * * */
 
 window.addEventListener("load", function() {
-console.log("h")
-  var video, $output;
-  var scale = 0.25;
-  var timer = 3;
-  var emotions = [];
 
+  /* -- STEP 0 -- */
+
+  // Spinner creation
   var spinner = new Spinner(opts).spin();
   $(".loading").append(spinner.el);
 
-  var initialize = function() {
-    video = $(".videoElement").get(0);
-    $(".capture").click(captureImage);
+  initialize();   
 
-    $(".emotions").css("display", "none"); 
-    $(".results").css("display", "none"); 
-
-    $(".spinner").css("display", "none");
-    $(".timer").css("display", "none");
-  };
- 
-  var captureImage = function() {
-    if (timer < 3) { 
-    // if (emotions.length < 3) { 
-
-      timer++;
-      $(".timer").text(timer);
-    
-      var canvas = document.createElement("canvas");
-      canvas.width = video.videoWidth * scale;
-      canvas.height = video.videoHeight * scale;
-      canvas.getContext('2d')
-        .drawImage(video, 0, 0, canvas.width, canvas.height);
-
-      socket.emit("image", canvas.toDataURL());
-    }
-    else if (timer == 3) {
-      if(emotions.length < 3) {
-
-      } else {
-        timer++;
-      validerAvis();
-      }
-    }
-    else {
-      $(".spinner").css("display", "none");
-      $(".timer").css("display", "none");
-      $(".face").removeClass("flash animated")
-      $(".like").addClass("select").removeClass("unselect");
-      $(".dislike").addClass("select").removeClass("unselect");
-    }
-  };
- 
-  $(initialize);   
-
-  if (navigator.mediaDevices.getUserMedia) {       
-      navigator.mediaDevices.getUserMedia({video: true})
-    .then(function(stream) {
-      video.srcObject = stream;
-    })
-    .catch(function(err0r) {
-      console.log("Something went wrong!");
-    });
-}
-
-  socket.on('emotion', function(data) {
-    // console.log(timer)
-    // console.log("-- NEW EMOTION --")
-    // console.log("Emotion = " + data)
-    emotions.push(data);
-    // console.log(emotions)
-    
-    // if (data == "unhappy") {
-    //   console.log("unhappy")
-    //   $(".face-sad").addClass("select").removeClass("unselect");
-    //   $(".face-neutral").addClass("unselect").removeClass("select");
-    //   $(".face-happy").addClass("unselect").removeClass("select");
-    // } else if (data == "neutral") {
-    //   console.log("neutral")
-    //   $(".face-sad").addClass("unselect").removeClass("select");
-    //   $(".face-neutral").addClass("select").removeClass("unselect");
-    //   $(".face-happy").addClass("unselect").removeClass("select");
-    // } else if (data == "happy") {
-    //   console.log("happy")
-    //   $(".face-sad").addClass("unselect").removeClass("select");
-    //   $(".face-neutral").addClass("unselect").removeClass("select");
-    //   $(".face-happy").addClass("select").removeClass("unselect");
-    // }
-    if (data == "up") {
-      console.log("like")
-      $(".like").addClass("select").removeClass("unselect");
-      $(".dislike").addClass("unselect").removeClass("select");
-    } else if (data == "down") {
-      console.log("neutral")
-      $(".like").addClass("unselect").removeClass("select");
-      $(".dislike").addClass("select").removeClass("unselect");
-    } 
-  });
-
-  var clickC = function() {
-    $(".capture").click();
-  }
+  /* -- STEP 1 -- */
 
   $(".button-start").click(function() { 
-    console.log("o")
     emotions = [];
     timer = 0;
 
@@ -124,83 +41,149 @@ console.log("h")
     $(".results").css("display", "none");
   }); 
 
-  var validerAvis = function() {
-    // var h=0, n=0, a=0;
-    var l=0, d=0;
-    console.log("-- VALIDATION --")
-    console.log(emotions)
-    $(".results").css("display", "block");
-    $(".avis").css("display", "none");
-      console.log("results = " + new Date())
-    
-    for (var i = emotions.length - 1; i >= 0; i--) {
-      // if (emotions[i] == "happy") {
-      //   h++;
-      // }
-      // if (emotions[i] == "neutral") {
-      //   n++;
-      // }
-      // if (emotions[i] == "unhappy") {
-      //   a++;
-      // }
-      if (emotions[i] == "up") {
-        l++;
-      }
-      if (emotions[i] == "down") {
-        d++;
-      }
-    }
 
-    // if ((h > a) & (h > n)) {
-    //   $('.face.result').attr("src", "/images/in-love (1).png");
-    //   $("#emotions").css("display", "none")
-
-    //   $(".text-result").replaceWith("<p class='text-result text'>enthousiaste</p")
-    //   $(".face").addClass("flash animated")
-    //   // $("#feedback").css("display", "block");
-
-    // } else if (a > n) {
-    //   // console.log("overall angry")
-    //   $('.face.result').attr("src", "/images/angry (1).png");
-    //   $("#emotions").css("display", "none")
-    //   $(".text-result").replaceWith("<p class='text-result text'>deçu</p")
-    //   $(".face").addClass("flash animated")
-    // } else {
-    //   // console.log("overall neutral")
-
-    //   $('.face.result').attr("src", "/images/neutral (1).png");
-    //   $("#emotions").css("display", "none")
-    //   $(".text-result").replaceWith("<p class='text-result text'>neutre</p")
-    //   $(".face").addClass("flash animated")
-    //   // $("#feedback").css("display", "block");
-    // }
-    if (d > l) {
-      // console.log("overall angry")
-      $('.face.result').attr("src", "/images/dislike.png");
-      $(".emotions").css("display", "none")
-      $(".text-result").replaceWith("<p class='text-result text'>deçu</p")
-      $(".face").addClass("flash animated")
-    } else {
-      // console.log("overall neutral")
-
-      $('.face.result').attr("src", "/images/like.png");
-      $(".emotions").css("display", "none")
-      $(".text-result").replaceWith("<p class='text-result text'>enthousiaste</p")
-      $(".face").addClass("flash animated")
-      // $(".feedback").css("display", "block");
-    }
-
-  }
-
+  /* -- STEP 3 -- */
+  
   $(".validate").click(function (){
     $(".results").css("display", "none");
     $(".avis").css("display", "flex");
   })
 
+  /* -- Authorisation to use the video -- */
 
+  if (navigator.mediaDevices.getUserMedia) {       
+    navigator.mediaDevices.getUserMedia({video: true})
+    .then(function(stream) {
+      video.srcObject = stream;
+    })
+    .catch(function(err0r) {
+      console.log("Something went wrong!");
+    });
+  }
 
-window.setInterval(clickC, 1000);
+  /* -- SOCKET -- */
+
+  socket.on('emotion', function(data) {
+    emotions.push(data);
+    
+      
+    if (data == "unhappy") {
+      console.log("unhappy")
+      $(".face-sad").addClass("select").removeClass("unselect");
+      $(".face-neutral").addClass("unselect").removeClass("select");
+      $(".face-happy").addClass("unselect").removeClass("select");
+    } else if (data == "neutral") {
+      console.log("neutral")
+      $(".face-sad").addClass("unselect").removeClass("select");
+      $(".face-neutral").addClass("select").removeClass("unselect");
+      $(".face-happy").addClass("unselect").removeClass("select");
+    } else if (data == "happy") {
+      console.log("happy")
+      $(".face-sad").addClass("unselect").removeClass("select");
+      $(".face-neutral").addClass("unselect").removeClass("select");
+      $(".face-happy").addClass("select").removeClass("unselect");
+    }
+  });
+
+  // Every 1 seconds (1000ms), the function clickC is called
+  window.setInterval(clickC, 1000);
 });
+
+
+/* * * * * * * * * * * * *\
+ *      FUNCTIONS        *
+\* * * * * * * * * * * * */
+
+/* -- Called every second -- */
+function clickC() {
+  if (timer < 3) { 
+    captureImage();
+  } else if (timer == 3) {
+    if (emotions.length >= 3) {
+      timer++;
+      validerAvis();
+    }
+  } else {
+    $(".spinner").css("display", "none");
+    $(".timer").css("display", "none");
+    $(".face").removeClass("flash animated")
+    $(".like").addClass("select").removeClass("unselect");
+    $(".dislike").addClass("select").removeClass("unselect");
+  }
+}
+
+/* -- First function to be called -- */
+function initialize () {
+  video = $(".videoElement").get(0);
+
+  $(".emotions").css("display", "none"); 
+  $(".results").css("display", "none"); 
+
+  $(".spinner").css("display", "none");
+  $(".timer").css("display", "none"); 
+};
+
+/* -- Take a picture from the video -- */
+function captureImage() {
+  timer++;
+  $(".timer").text(timer);
+    
+  var canvas = document.createElement("canvas");
+  canvas.width = video.videoWidth * scale;
+  canvas.height = video.videoHeight * scale;
+  canvas.getContext('2d')
+    .drawImage(video, 0, 0, canvas.width, canvas.height);
+
+  socket.emit("image", canvas.toDataURL());
+ 
+};
+
+/* --  -- */
+function validerAvis() {
+  var h = 0, n = 0, a = 0;
+
+  $(".results").css("display", "block");
+  $(".avis").css("display", "none");
+
+  if (emotions[i] == "happy") {
+    h++;
+  }
+  if (emotions[i] == "neutral") {
+    n++;
+  }
+  if (emotions[i] == "unhappy") {
+    a++;
+  }
+
+  if ((h > a) & (h > n)) {
+    $('.face.result').attr("src", "/images/in-love (1).png");
+    $("#emotions").css("display", "none")
+
+    $(".text-result").replaceWith("<p class='text-result text'>enthousiaste</p")
+    $(".face").addClass("flash animated")
+    // $("#feedback").css("display", "block");
+
+  } else if (a > n) {
+    // console.log("overall angry")
+    $('.face.result').attr("src", "/images/angry (1).png");
+    $("#emotions").css("display", "none")
+    $(".text-result").replaceWith("<p class='text-result text'>deçu</p")
+    $(".face").addClass("flash animated")
+  } else {
+    // console.log("overall neutral")
+
+    $('.face.result').attr("src", "/images/neutral (1).png");
+    $("#emotions").css("display", "none")
+    $(".text-result").replaceWith("<p class='text-result text'>neutre</p")
+    $(".face").addClass("flash animated")
+    // $("#feedback").css("display", "block");
+  }
+   
+}
+
+/* * * * * * * * * * * * *\
+ *        SPINNER        *
+\* * * * * * * * * * * * */
 
 var opts = {
     lines: 20,
