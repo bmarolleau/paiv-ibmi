@@ -22,3 +22,5 @@ Install Node Js
 ### How to use the app
 
 The app has a toogle button, check it to start making call to 
+
+![alt text](https://github.ibm.com/Lucile-Jerber/outOfStockGISC/blob/master/app/public/images/readme.png)
