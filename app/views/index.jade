@@ -1,0 +1,14 @@
+include ./header.jade
+.square
+
+label.switch
+	input(type="checkbox", id="checkbox")
+	span(class="slider round")
+		
+select.chooseCamera
+#error
+	img(src='../images/warning.png')
+	span.error Please connect to the firewall. Go to this 
+		a(target="_blank" rel="noopener noreferrer" href="https://9.128.128.203/netaccess/loginuser.html") page.
+#videoContainer
+	video(autoplay="true", class="videoElement")
