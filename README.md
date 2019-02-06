@@ -13,8 +13,8 @@ Install Node Js
 ### Launch app
 
 - Open a terminal
-- Go to your folder using the 
-``` Use cd followed by a folder name to go somewhere, use cd.. to go back to the parent folder```
+- Go to your folder. 
+``` Use *cd* followed by a folder name to go somewhere. Use *cd..* to go back to the parent folder```
 
 - Write ```node app.js```
 - Open this url : "http://localhost:10000/", in your browser
