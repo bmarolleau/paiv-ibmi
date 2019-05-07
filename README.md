@@ -24,3 +24,4 @@ The app has a toogle button, check it to start making call to power AI Vision AP
 You can also choose any camera connected to the computer.
 
 ![alt text](https://github.ibm.com/Lucile-Jerber/outOfStockGISC/blob/master/app/public/images/readme.png)
+

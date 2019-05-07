@@ -5,12 +5,19 @@
 // Express
 var express = require('express');
 var app     = express();
+var https = require('https');
+const fs = require('fs');
+
 
 require('./config/express')(app);
 app.use(express.query()); 
 
 // Socket.io
-var server = require('http').createServer(app),
+var server = require('https').createServer({
+    key: fs.readFileSync('./key.pem'),
+    cert: fs.readFileSync('./cert.pem'),
+passphrase: 'abc123'
+},app),
     io = require('socket.io').listen(server);
 // Env
 require('dotenv').config()
@@ -21,7 +28,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
 // Autres 
-var visualReco = require('./imageTreatment.js'),
+var visualReco = require('./imageProcessing.js'),
     port       = process.env.PORT || 10000;
 
 var alerte = false;
@@ -41,6 +48,7 @@ app.get('/',  function(req, res) {
 
 app.get('/api/alerte',  function(req, res) {
 	  console.log("ALERTE")
+    console.log(alerte)
   	res.json(alerte);
 });
 
@@ -56,12 +64,10 @@ io.sockets.on('connection', function (socket, pseudo) {
     visualReco.savePicture(data)
     .then(() => visualReco.classifyImage())
     .then(function(result) {
-      alerte = result.alerte;
+      alerte = result[0].alerte;
       socket.emit("result", result)
     })
-  
   });
-
 });
 
 /* * * * * * * * * * * * * * *\

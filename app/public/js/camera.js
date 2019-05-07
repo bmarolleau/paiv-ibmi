@@ -32,33 +32,38 @@ window.addEventListener("load", function() {
   socket.on('result', function(data) { 
     console.log(data)
 
-    if(data.alerte == "error") { // If error is sent back, this means that we are not connected to the firewall
+    if(data[0].alerte == "error") { // If error is sent back, this means that we are not connected to the firewall
       $("#error").css("display", "block"); 
-    } else if(data.alerte) { // Only displays square there is an alert
-      $("#error").css("display", "none"); 
-      $(".square").css("display", "block"); 
+    } else if(data[0].alerte) { // Only displays square there is an alert
+      var squares = [];
+      $(".squares").empty();
+      for (var i = data.length - 1; i >= 0; i--) {
+        squares[i] = ".square" + i;
+        $("#error").css("display", "none"); 
+        $(".squares").append("<div class='square square" + i + "'></div>"); 
 
-      // Because the size of the video on the web page changes according to the screen, 
-      // We need to calculate a scale to position the square at the rigth place 
-      // When we send the picture to power AI, we resize it at a scale. SO the result comes at this size
-      var videoWidth = parseFloat($(".videoElement").css("width").replace(/[^-\d\.]/g, ''), 10);
-      scale2 = videoWidth/(640*scale);
-      // Size of the square
-      var width  = data.xmax*scale2 - (data.xmin*scale2);
-      var height = data.ymax*scale2 - (data.ymin*scale2);
-      $(".square").css("width", width);  
-      $(".square").css("height", height); 
+        // Because the size of the video on the web page changes according to the screen, 
+        // We need to calculate a scale to position the square at the rigth place 
+        // When we send the picture to power AI, we resize it at a scale. SO the result comes at this size
+        var videoWidth = parseFloat($(".videoElement").css("width").replace(/[^-\d\.]/g, ''), 10);
+        scale2 = videoWidth/(640*scale);
+        // Size of the square
+        var width  = data[i].xmax*scale2 - (data[i].xmin*scale2);
+        var height = data[i].ymax*scale2 - (data[i].ymin*scale2);
+        $(squares[i]).css("width", width);  
+        $(squares[i]).css("height", height); 
 
-      // Position of the square
-      var marginTop = parseFloat($(".videoElement").css("margin-top").replace(/[^-\d\.]/g, ''), 10);
-      var marginLeft = parseFloat($(".videoElement").css("margin-left").replace(/[^-\d\.]/g, ''), 10);
+        // Position of the square
+        var marginTop = parseFloat($(".videoElement").css("margin-top").replace(/[^-\d\.]/g, ''), 10);
+        var marginLeft = parseFloat($(".videoElement").css("margin-left").replace(/[^-\d\.]/g, ''), 10);
 
-      $(".square").css("top", (data.ymin * scale2) + marginTop);  
-      $(".square").css("left", (data.xmin * scale2)+ marginLeft);   
+        $(squares[i]).css("top", (data[i].ymin * scale2) + marginTop);  
+        $(squares[i]).css("left", (data[i].xmin * scale2)+ marginLeft);   
+      } 
     } else {
-      $("#error").css("display", "none"); 
-      $(".square").css("display", "none"); 
-    }
+        $("#error").css("display", "none"); 
+        $( ".squares" ).empty();
+      }
   })
 
   function chooseCamera (deviceId) {

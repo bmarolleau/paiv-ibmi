@@ -2,8 +2,8 @@ body, html {
 	height: 100vh;
 	width: 100vw;
 	font-family: 'Lato', sans-serif, Arial, sans-serif;
-	color: black;
-	background-image: url("../images/background.jpg");
+	color: white;
+	/*background-image: url("../images/background.jpg");*/
 	background-size: cover;
 	background-repeat: no-repeat;
 }
@@ -119,7 +119,7 @@ input:checked + .slider:before {
 	display: block;
 }
 
-.square {
+/*.square {
 	position: absolute;
 	top: 200px;
 	left: 60px;
@@ -128,4 +128,18 @@ input:checked + .slider:before {
 	display: none;
 
 	border: 3px solid #c33c3c;
+}
+*/
+.square {
+	position: absolute;
+	z-index: 2;
+
+	border: 3px solid #c33c3c;
+}
+.images{
+	width: 100%;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: space-around;
 }
