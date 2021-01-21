@@ -24,7 +24,7 @@
     "jade": "^1.11.0",
     "lokijs": "^1.5.5",
     "request": "^2.83.0",
-    "socket.io": "^2.1.1",
+    "socket.io": "^2.4.0",
     "watson-developer-cloud": "^3.6.0"
   },
   "repository": {},
